@@ -1,0 +1,107 @@
+name: photography-platform
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: photography-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${DATABASE_USER:-photography}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD:-photography}
+      POSTGRES_DB: ${DATABASE_NAME:-photography}
+    # Loopback-only: these dev credentials must never be reachable from the local network.
+    ports:
+      - '127.0.0.1:${DATABASE_PORT:-5432}:5432'
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./postgres/initdb:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test:
+        [
+          'CMD-SHELL',
+          'pg_isready -U ${DATABASE_USER:-photography} -d ${DATABASE_NAME:-photography}',
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: photography-redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    # Loopback-only: no password is set for local dev, so this must not be exposed.
+    ports:
+      - '127.0.0.1:${REDIS_PORT:-6379}:6379'
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Local SMTP catcher for email verification / password reset during dev.
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: photography-mailhog
+    restart: unless-stopped
+    ports:
+      - '127.0.0.1:1025:1025' # SMTP
+      - '127.0.0.1:8025:8025' # web UI
+
+  # Optional S3-compatible storage for local dev (leave AWS_* blank to use disk).
+  minio:
+    image: minio/minio:latest
+    container_name: photography-minio
+    restart: unless-stopped
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${AWS_ACCESS_KEY_ID:-minioadmin}
+      MINIO_ROOT_PASSWORD: ${AWS_SECRET_ACCESS_KEY:-minioadmin}
+    # Default minioadmin credentials — loopback-only.
+    ports:
+      - '127.0.0.1:9000:9000'
+      - '127.0.0.1:9001:9001'
+    volumes:
+      - minio-data:/data
+
+  backend:
+    build:
+      context: ..
+      dockerfile: docker/backend.Dockerfile
+    container_name: photography-backend
+    restart: unless-stopped
+    env_file:
+      - ../.env
+    environment:
+      DATABASE_HOST: postgres
+      REDIS_HOST: redis
+      MAIL_HOST: mailhog
+    ports:
+      - '${BACKEND_PORT:-4000}:4000'
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    # On first boot: run migrations then start.
+    command: sh -c "pnpm --filter @photography/backend migration:run && node apps/backend/dist/main.js"
+
+  frontend:
+    build:
+      context: ..
+      dockerfile: docker/frontend.Dockerfile
+    container_name: photography-frontend
+    restart: unless-stopped
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:4000/api/v1
+    ports:
+      - '3000:3000'
+    depends_on:
+      - backend
+
+volumes:
+  postgres-data:
+  redis-data:
+  minio-data:

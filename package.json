@@ -1,0 +1,35 @@
+{
+  "name": "photography-platform",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Production-grade photography platform — monorepo (Next.js 15 + NestJS).",
+  "engines": {
+    "node": ">=20.11.0",
+    "pnpm": ">=9.0.0"
+  },
+  "packageManager": "pnpm@9.12.0",
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "typecheck": "turbo run typecheck",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,mjs,cjs,json,md,yml,yaml,css,scss}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,mjs,cjs,json,md,yml,yaml,css,scss}\"",
+    "backend:dev": "pnpm --filter @photography/backend start:dev",
+    "frontend:dev": "pnpm --filter @photography/frontend dev",
+    "db:migrate": "pnpm --filter @photography/backend migration:run",
+    "db:revert": "pnpm --filter @photography/backend migration:revert",
+    "docker:up": "docker compose -f docker/docker-compose.yml up -d",
+    "docker:down": "docker compose -f docker/docker-compose.yml down",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.10",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.3.0",
+    "prettier": "^3.3.3",
+    "turbo": "^2.1.0",
+    "typescript": "^5.9.2"
+  }
+}

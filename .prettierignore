@@ -1,0 +1,15 @@
+node_modules
+pnpm-lock.yaml
+
+# build output
+dist
+build
+coverage
+.next
+out
+.turbo
+
+# generated
+*.min.js
+*.min.css
+CHANGELOG.md
