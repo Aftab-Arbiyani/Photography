@@ -59,7 +59,7 @@ export function SplitFeature({
             {photo && (
               <div className="absolute inset-x-4 bottom-4 rounded-[14px] bg-black/45 p-4 backdrop-blur-md">
                 <p className="truncate text-sm font-medium text-white">{photo.title}</p>
-                <p className="mt-1 truncate text-[11px] uppercase tracking-[0.18em] text-white/55">
+                <p className="mt-1 truncate text-[11px] uppercase tracking-[0.18em] text-white/75">
                   {captureLine(photo) ?? 'Original frame'}
                 </p>
               </div>
@@ -71,17 +71,19 @@ export function SplitFeature({
         <Reveal index={1} className={flip ? 'lg:order-1' : undefined}>
           <p
             className={`flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.32em] ${
-              onDark ? 'text-white/60' : 'text-ink-muted'
+              onDark ? 'text-white/80' : 'text-ink-muted dark:text-white/65'
             }`}
           >
-            <span className={`h-px w-8 ${onDark ? 'bg-primary-on-dark' : 'bg-primary'}`} />
+            <span
+              className={`h-px w-8 ${onDark ? 'bg-primary-on-dark' : 'bg-primary dark:bg-primary-on-dark'}`}
+            />
             {eyebrow}
           </p>
           <h2 className="font-display mt-4 text-[clamp(28px,4vw,44px)] font-semibold leading-[1.06] tracking-[-0.02em]">
             {title}
           </h2>
           <p
-            className={`mt-5 text-lg leading-relaxed ${onDark ? 'text-white/70' : 'text-ink-muted'}`}
+            className={`mt-5 text-lg leading-relaxed ${onDark ? 'text-white/85' : 'text-ink-muted dark:text-white/65'}`}
           >
             {body}
           </p>
@@ -93,10 +95,12 @@ export function SplitFeature({
                   <span
                     aria-hidden
                     className={`mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full ${
-                      onDark ? 'bg-primary-on-dark' : 'bg-primary'
+                      onDark ? 'bg-primary-on-dark' : 'bg-primary dark:bg-primary-on-dark'
                     }`}
                   />
-                  <span className={onDark ? 'text-white/80' : 'text-ink'}>{point}</span>
+                  <span className={onDark ? 'text-white/85' : 'text-ink dark:text-white/85'}>
+                    {point}
+                  </span>
                 </li>
               ))}
             </ul>
@@ -105,7 +109,9 @@ export function SplitFeature({
           <Link
             href={ctaHref}
             className={`mt-9 inline-flex items-center gap-2 rounded-pill px-6 py-3 text-[15px] font-medium transition active:scale-95 ${
-              onDark ? 'bg-white text-ink hover:bg-white/90' : 'bg-ink text-white hover:bg-ink/90'
+              onDark
+                ? 'bg-white text-ink hover:bg-white/90'
+                : 'bg-ink text-white hover:bg-ink/90 dark:bg-white dark:text-ink dark:hover:bg-white/90'
             }`}
           >
             {ctaLabel}

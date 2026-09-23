@@ -16,13 +16,13 @@ export function CtaBand({ photo }: CtaBandProps) {
       <div aria-hidden className="film-grain absolute inset-0" />
 
       <Reveal className="relative z-10 mx-auto max-w-content text-center">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.32em] text-white/60">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.32em] text-white/80">
           For photographers
         </p>
         <h2 className="font-display mt-5 text-[clamp(30px,5vw,54px)] font-semibold leading-[1.05] tracking-[-0.02em]">
           Your work deserves a better wall.
         </h2>
-        <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-white/70">
+        <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-white/85">
           Upload once — derivatives, EXIF, blur placeholders and the storefront are handled for you.
         </p>
         <div className="mt-9 flex flex-wrap items-center justify-center gap-3">

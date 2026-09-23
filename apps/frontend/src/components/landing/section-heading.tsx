@@ -28,10 +28,12 @@ export function SectionHeading({
       <div className="max-w-2xl">
         <p
           className={`flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.32em] ${
-            onDark ? 'text-white/60' : 'text-ink-muted'
+            onDark ? 'text-white/80' : 'text-ink-muted dark:text-white/65'
           }`}
         >
-          <span className={`h-px w-8 ${onDark ? 'bg-primary-on-dark' : 'bg-primary'}`} />
+          <span
+            className={`h-px w-8 ${onDark ? 'bg-primary-on-dark' : 'bg-primary dark:bg-primary-on-dark'}`}
+          />
           {eyebrow}
         </p>
         <h2
@@ -43,7 +45,7 @@ export function SectionHeading({
         </h2>
         {body && (
           <p
-            className={`mt-4 text-lg leading-relaxed ${onDark ? 'text-white/65' : 'text-ink-muted'}`}
+            className={`mt-4 text-lg leading-relaxed ${onDark ? 'text-white/80' : 'text-ink-muted dark:text-white/65'}`}
           >
             {body}
           </p>
@@ -56,7 +58,7 @@ export function SectionHeading({
           className={`group inline-flex shrink-0 items-center gap-2 text-[15px] font-medium transition ${
             onDark
               ? 'text-white hover:text-primary-on-dark'
-              : 'text-primary hover:text-primary-focus'
+              : 'text-primary hover:text-primary-focus dark:text-primary-on-dark'
           }`}
         >
           {ctaLabel}

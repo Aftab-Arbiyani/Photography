@@ -53,7 +53,7 @@ export function CategoryStrip({ categories, photos }: CategoryStripProps) {
                   <p className="font-display text-base font-semibold tracking-tight text-white">
                     {category.name}
                   </p>
-                  <p className="mt-0.5 text-[11px] uppercase tracking-[0.2em] text-white/50">
+                  <p className="mt-0.5 text-[11px] uppercase tracking-[0.2em] text-white/75">
                     {category.photosCount} {category.photosCount === 1 ? 'frame' : 'frames'}
                   </p>
                 </div>

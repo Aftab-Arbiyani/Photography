@@ -76,7 +76,7 @@ export function Hero({ photos }: HeroProps) {
 
       {/* Editorial block, bottom-left */}
       <div className="relative z-10 mx-auto w-full max-w-wide px-5 pb-16 pt-32 sm:pb-20">
-        <p className="animate-rise flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.32em] text-white/70">
+        <p className="animate-rise flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.32em] text-white/85">
           <span className="h-px w-10 bg-primary-on-dark" />
           Photography, framed.
         </p>
@@ -86,7 +86,7 @@ export function Hero({ photos }: HeroProps) {
           className="font-display animate-rise mt-5 max-w-4xl text-[clamp(40px,8vw,92px)] font-semibold leading-[0.98] tracking-[-0.03em] [text-shadow:0_2px_30px_rgba(0,0,0,0.35)]"
         >
           Light, story and craft.
-          <span className="block text-white/55">In one frame.</span>
+          <span className="block text-white/75">In one frame.</span>
         </h1>
 
         <p
@@ -123,7 +123,7 @@ export function Hero({ photos }: HeroProps) {
             <p className="truncate text-sm font-medium text-white/90">
               {current?.title ?? 'Your featured frames appear here'}
             </p>
-            <p className="mt-1 truncate text-xs tracking-wide text-white/45">
+            <p className="mt-1 truncate text-xs tracking-wide text-white/75">
               {capture ?? 'Publish a photograph and it takes the stage automatically.'}
             </p>
           </div>
@@ -143,7 +143,7 @@ export function Hero({ photos }: HeroProps) {
                 />
               ))}
             </div>
-            <span className="font-display text-xs tabular-nums tracking-[0.2em] text-white/55">
+            <span className="font-display text-xs tabular-nums tracking-[0.2em] text-white/75">
               {String(active + 1).padStart(2, '0')} / {String(slides.length).padStart(2, '0')}
             </span>
           </div>

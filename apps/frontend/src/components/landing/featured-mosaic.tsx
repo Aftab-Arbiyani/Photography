@@ -57,10 +57,10 @@ function MosaicTile({
             >
               {photo.title}
             </h3>
-            <p className="mt-1.5 line-clamp-1 text-[11px] uppercase tracking-[0.18em] text-white/55">
+            <p className="mt-1.5 line-clamp-1 text-[11px] uppercase tracking-[0.18em] text-white/75">
               {captureLine(photo) ?? 'Original frame'}
             </p>
-            <p className="mt-3 flex items-center gap-4 text-xs text-white/70 transition-opacity duration-500 sm:opacity-0 sm:group-hover:opacity-100">
+            <p className="mt-3 flex items-center gap-4 text-xs text-white/85 transition-opacity duration-500 sm:opacity-0 sm:group-hover:opacity-100">
               <span>♥ {compactCount(photo.likesCount)}</span>
               <span>◎ {compactCount(photo.viewsCount)}</span>
               <span className="ml-auto font-medium text-white">View frame →</span>

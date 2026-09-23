@@ -12,7 +12,7 @@ export const tokens = {
     surfaceBlack: '#000000',
     ink: '#1d1d1f',
     inkMuted80: '#333333',
-    inkMuted48: '#7a7a7a',
+    inkMuted48: '#6e6e73',
     bodyOnDark: '#ffffff',
     bodyMuted: '#cccccc',
     primary: '#0066cc',

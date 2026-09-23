@@ -65,14 +65,14 @@ export function CollectionShowcase({ entries }: CollectionShowcaseProps) {
                       className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent"
                     />
                     <div className="absolute inset-x-0 bottom-0 p-6">
-                      <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-white/55">
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-white/75">
                         {collection.photosCount} {collection.photosCount === 1 ? 'frame' : 'frames'}
                       </p>
                       <h3 className="font-display mt-2 text-2xl font-semibold tracking-tight text-white">
                         {collection.title}
                       </h3>
                       {collection.description && (
-                        <p className="mt-2 line-clamp-2 text-sm text-white/65">
+                        <p className="mt-2 line-clamp-2 text-sm text-white/80">
                           {collection.description}
                         </p>
                       )}
@@ -101,7 +101,7 @@ export function CollectionShowcase({ entries }: CollectionShowcaseProps) {
                       <h3 className="font-display text-2xl font-semibold tracking-tight text-white">
                         {card.title}
                       </h3>
-                      <p className="mt-2 text-sm text-white/65">{card.body}</p>
+                      <p className="mt-2 text-sm text-white/80">{card.body}</p>
                     </div>
                   </div>
                 </Reveal>

@@ -13,7 +13,7 @@ const config: Config = {
         canvas: '#ffffff',
         parchment: '#f5f5f7',
         ink: '#1d1d1f',
-        'ink-muted': '#7a7a7a',
+        'ink-muted': '#6e6e73',
         tile: {
           1: '#272729',
           2: '#2a2a2c',
