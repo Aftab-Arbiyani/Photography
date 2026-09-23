@@ -285,9 +285,6 @@ importers:
       '@stripe/stripe-js':
         specifier: ^4.5.0
         version: 4.10.0
-      '@studio-freight/lenis':
-        specifier: ^1.0.42
-        version: 1.0.42
       antd:
         specifier: ^5.20.0
         version: 5.29.3(luxon@3.5.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
@@ -2449,10 +2446,6 @@ packages:
   '@stripe/stripe-js@4.10.0':
     resolution: {integrity: sha512-KrMOL+sH69htCIXCaZ4JluJ35bchuCCznyPyrbN8JXSGQfwBI1SuIEMZNwvy8L8ykj29t6sa5BAAiL7fNoLZ8A==}
     engines: {node: '>=12.16'}
-
-  '@studio-freight/lenis@1.0.42':
-    resolution: {integrity: sha512-HJAGf2DeM+BTvKzHv752z6Z7zy6bA643nZM7W88Ft9tnw2GsJSp6iJ+3cekjyMIWH+cloL2U9X82dKXgdU8kPg==}
-    deprecated: 'The ''@studio-freight/lenis'' package has been renamed to ''lenis''. Please update your dependencies: npm install lenis and visit the documentation: https://www.npmjs.com/package/lenis'
 
   '@swc/helpers@0.5.15':
     resolution: {integrity: sha512-JQ5TuMi45Owi4/BIMAJBoSQoOJu12oOk/gADqlcUL9JEdHB8vyjUSsxqeNXnmXHjYKMi2WcYtezGEEhqUI/E2g==}
@@ -9273,8 +9266,6 @@ snapshots:
       react-dom: 19.2.7(react@19.2.7)
 
   '@stripe/stripe-js@4.10.0': {}
-
-  '@studio-freight/lenis@1.0.42': {}
 
   '@swc/helpers@0.5.15':
     dependencies:
