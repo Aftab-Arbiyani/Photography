@@ -3,14 +3,23 @@
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
-import { App, Button, Card, Divider, Empty, Form, Input, List, Radio, Rate, Spin, Tag } from 'antd';
-import { HeartFilled, HeartOutlined } from '@ant-design/icons';
-import { MasonryGrid, ResponsiveImage } from '@photography/ui';
+import { App, Button, Empty, Form, Input, List, Radio, Rate, Spin } from 'antd';
+import {
+  CheckCircleFilled,
+  HeartFilled,
+  HeartOutlined,
+  PlayCircleOutlined,
+} from '@ant-design/icons';
 import type { MarketplaceAlbum, PublicPhoto, PublicReview } from '@photography/types';
 import { ApiError, client } from '@/lib/api-client';
 import { useAuth } from '@/components/providers/auth-provider';
 import { formatMoney } from '@/lib/money';
 import { AlbumCard } from '@/components/store/album-card';
+import { PhotoGrid } from '@/components/gallery/photo-grid';
+
+/** Raised panel surface, matching the photo page's sidebar cards. */
+const panel = 'rounded-card border border-hairline bg-canvas p-5 dark:bg-tile-2';
+const pill = 'inline-flex items-center gap-1.5 rounded-pill px-2.5 py-0.5 text-xs font-bold';
 
 export default function StoreAlbumPage() {
   const { slug } = useParams<{ slug: string }>();
@@ -90,27 +99,30 @@ export default function StoreAlbumPage() {
 
   if (loading)
     return (
-      <div className="flex min-h-[60svh] items-center justify-center pt-24">
+      <div className="flex min-h-[60svh] items-center justify-center pt-8">
         <Spin size="large" />
       </div>
     );
   if (!album)
     return (
-      <div className="mx-auto max-w-content px-5 pt-28">
-        <Empty description="Album not found" />
+      <div className="mx-auto max-w-content px-5 pt-10 pb-20 text-center">
+        <Empty description="Set not found" />
+        <Link href="/store" className="mt-2 inline-block text-sm font-semibold text-primary">
+          Back to the shop
+        </Link>
       </div>
     );
 
   return (
-    <article className="mx-auto max-w-wide px-5 pt-28 pb-20">
-      <div className="grid gap-10 lg:grid-cols-[1fr_360px]">
+    <article className="mx-auto max-w-wide px-5 pt-10 pb-20">
+      <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_360px]">
         {/* preview */}
-        <div>
-          <div className="flex items-center gap-3">
-            <h1 className="font-display text-display-lg font-semibold tracking-tight">
-              {album.title}
-            </h1>
-            {album.isFeatured && <Tag color="gold">Featured</Tag>}
+        <div className="min-w-0">
+          <div className="flex flex-wrap items-center gap-3">
+            <h1 className="font-display text-display-lg font-bold tracking-tight">{album.title}</h1>
+            {album.isFeatured && (
+              <span className={`${pill} bg-primary text-ink-fixed`}>Featured</span>
+            )}
           </div>
           {album.description && (
             <p className="mt-3 max-w-prose text-ink-muted">{album.description}</p>
@@ -121,42 +133,32 @@ export default function StoreAlbumPage() {
               href={album.trailerUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-3 inline-block text-primary"
+              className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-primary transition hover:text-primary-focus"
             >
-              ▶ Watch the trailer
+              <PlayCircleOutlined aria-hidden />
+              Watch the trailer
+              <span className="sr-only">(opens in a new tab)</span>
             </a>
           )}
 
-          <h2 className="font-display mt-8 mb-3 text-tagline font-semibold">Sample images</h2>
+          <h2 className="font-display mt-8 mb-3 text-tagline font-bold tracking-tight">
+            Sample images
+          </h2>
           {photos.length === 0 ? (
             <p className="text-sm text-ink-muted">No preview images yet.</p>
           ) : (
-            <MasonryGrid>
-              {photos.map((p) => (
-                <Link
-                  key={p.id}
-                  href={`/photos/${p.slug}`}
-                  className="mb-4 block break-inside-avoid overflow-hidden rounded-card"
-                >
-                  <ResponsiveImage
-                    assets={p.assets}
-                    alt={p.title}
-                    width={p.width}
-                    height={p.height}
-                  />
-                </Link>
-              ))}
-            </MasonryGrid>
+            <PhotoGrid photos={photos} rowHeight={200} />
           )}
         </div>
 
         {/* purchase panel */}
         <aside>
-          <Card className="sticky top-24">
+          <div className={`sticky top-20 ${panel}`}>
             {album.purchased && (
-              <Tag color="green" className="mb-3">
+              <p className={`${pill} mb-4 bg-ink/10 text-ink`}>
+                <CheckCircleFilled aria-hidden className="!text-primary" />
                 You own this
-              </Tag>
+              </p>
             )}
             <Radio.Group
               className="flex w-full flex-col gap-3"
@@ -204,22 +206,28 @@ export default function StoreAlbumPage() {
               size="large"
               block
               className="!mt-3"
-              icon={wishlisted ? <HeartFilled style={{ color: '#ef4444' }} /> : <HeartOutlined />}
+              aria-pressed={wishlisted}
+              icon={
+                wishlisted ? (
+                  <HeartFilled aria-hidden className="!text-primary" />
+                ) : (
+                  <HeartOutlined aria-hidden />
+                )
+              }
               onClick={toggleWishlist}
             >
               {wishlisted ? 'In wishlist' : 'Add to wishlist'}
             </Button>
-          </Card>
+          </div>
         </aside>
       </div>
 
-      <Divider />
       <ReviewsSection album={album} reviews={reviews} onChange={load} />
 
       {related.length > 0 && (
         <section className="mt-12">
-          <h2 className="font-display mb-5 text-tagline font-semibold">Related albums</h2>
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <h2 className="font-display mb-5 text-tagline font-bold tracking-tight">More sets</h2>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {related.map((r) => (
               <AlbumCard key={r.id} album={r} />
             ))}
@@ -256,8 +264,8 @@ function ReviewsSection({
   };
 
   return (
-    <section>
-      <h2 className="font-display mb-4 text-tagline font-semibold">
+    <section className="mt-12 border-t border-hairline pt-10">
+      <h2 className="font-display mb-4 text-tagline font-bold tracking-tight">
         Reviews{' '}
         {album.ratingCount > 0 && (
           <span className="text-ink-muted">
@@ -267,14 +275,14 @@ function ReviewsSection({
       </h2>
 
       {album.purchased && (
-        <Card className="mb-6">
+        <div className={`mb-6 ${panel}`}>
           <Form layout="vertical" onFinish={submit} requiredMark={false}>
             <Form.Item
               name="rating"
               label="Your rating"
               rules={[{ required: true, message: 'Pick a rating' }]}
             >
-              <Rate />
+              <Rate className="!text-primary" />
             </Form.Item>
             <Form.Item name="title" label="Title">
               <Input maxLength={160} />
@@ -286,7 +294,7 @@ function ReviewsSection({
               Submit review
             </Button>
           </Form>
-        </Card>
+        </div>
       )}
 
       <List
@@ -296,10 +304,17 @@ function ReviewsSection({
           <List.Item>
             <List.Item.Meta
               title={
-                <span className="flex items-center gap-2 text-sm">
-                  <Rate disabled value={r.rating} style={{ fontSize: 14 }} />
+                <span className="flex flex-wrap items-center gap-2 text-sm">
+                  <Rate
+                    disabled
+                    value={r.rating}
+                    className="!text-primary"
+                    style={{ fontSize: 14 }}
+                  />
                   {r.title}
-                  {r.isVerifiedPurchase && <Tag color="green">Verified</Tag>}
+                  {r.isVerifiedPurchase && (
+                    <span className={`${pill} bg-ink/10 text-ink-muted`}>Verified purchase</span>
+                  )}
                 </span>
               }
               description={

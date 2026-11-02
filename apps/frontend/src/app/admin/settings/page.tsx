@@ -219,7 +219,7 @@ export default function AdminSettingsPage() {
           setCreating(false);
         }}
         okText="Save"
-        destroyOnClose
+        destroyOnHidden
       >
         <Form form={form} layout="vertical" requiredMark={false}>
           <Form.Item name="key" label="Key" rules={[{ required: true }]}>

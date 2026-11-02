@@ -62,7 +62,7 @@ export function PricingView() {
     i === SubscriptionInterval.YEAR ? '/year' : '/month';
 
   return (
-    <section className="mx-auto max-w-wide px-5 pb-24 pt-28">
+    <section className="mx-auto max-w-wide px-5 pb-24 pt-10">
       <header className="mb-12 text-center">
         <p className="text-tagline text-primary">Membership</p>
         <h1 className="font-display mt-3 text-display-lg font-semibold tracking-tight">

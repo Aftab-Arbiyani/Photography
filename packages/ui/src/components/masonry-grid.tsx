@@ -17,7 +17,7 @@ export function MasonryGrid({ children, className }: MasonryGridProps) {
   return (
     <div
       className={cn(
-        'gap-4 [column-fill:_balance] columns-1 sm:columns-2 lg:columns-3 xl:columns-4',
+        'gap-2 [column-fill:_balance] columns-2 md:columns-3 lg:columns-4 xl:columns-5',
         className,
       )}
     >

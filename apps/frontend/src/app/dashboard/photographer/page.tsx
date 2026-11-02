@@ -10,6 +10,7 @@ import {
 } from '@photography/types';
 import { ApiError, client } from '@/lib/api-client';
 import { useAuth } from '@/components/providers/auth-provider';
+import { features } from '@/lib/config';
 
 const money = (cents: number, currency: string) =>
   new Intl.NumberFormat(undefined, { style: 'currency', currency: currency.toUpperCase() }).format(
@@ -29,6 +30,14 @@ export default function PhotographerPage() {
     user && (user.role === UserRole.PHOTOGRAPHER || user.role === UserRole.ADMIN);
 
   if (isPhotographer) return <EarningsDashboard />;
+  if (!features.photographerApplications) {
+    return (
+      <Card>
+        <h1 className="font-display text-tagline font-semibold">Not available</h1>
+        <p className="mt-2 text-sm text-ink-muted">Uploading is limited to administrators.</p>
+      </Card>
+    );
+  }
   return <ApplicationFlow />;
 }
 

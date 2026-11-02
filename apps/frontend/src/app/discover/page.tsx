@@ -51,7 +51,7 @@ export default function DiscoverPage() {
   }, []);
 
   return (
-    <section className="mx-auto max-w-wide px-5 pt-28 pb-20">
+    <section className="mx-auto max-w-wide px-5 pt-10 pb-20">
       <header className="mb-10">
         <h1 className="font-display text-display-lg font-semibold tracking-tight">Discover</h1>
         <p className="mt-2 text-ink-muted">

@@ -28,7 +28,7 @@ export default async function AlbumsPage() {
   const albums = await api.albums().catch(() => EMPTY);
 
   return (
-    <section className="mx-auto max-w-wide px-5 pt-28 pb-20">
+    <section className="mx-auto max-w-wide px-5 pt-10 pb-20">
       <header className="mb-10">
         <h1 className="font-display text-display-lg font-semibold tracking-tight">Albums</h1>
         <p className="mt-2 text-ink-muted">Bodies of work, organised by shoot and project.</p>

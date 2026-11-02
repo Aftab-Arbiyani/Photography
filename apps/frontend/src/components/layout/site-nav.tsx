@@ -1,69 +1,70 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import { MoonOutlined, ShoppingCartOutlined, SunOutlined } from '@ant-design/icons';
 import { usePathname } from 'next/navigation';
-import { darkHeroRoutes, navLinks, siteConfig } from '@/lib/config';
+import { Dropdown } from 'antd';
+import type { MenuProps } from 'antd';
+import { MoonOutlined, ShoppingCartOutlined, SunOutlined } from '@ant-design/icons';
+import { cn } from '@photography/ui';
+import { navLinks, siteConfig } from '@/lib/config';
 import { useTheme } from '@/components/providers/theme-provider';
 import { useAuth } from '@/components/providers/auth-provider';
 import { NavSearch } from './nav-search';
 import { NotificationBell } from './notification-bell';
 
-/** Primary action pill — inverts to solid white over a dark hero. */
-const pillClasses = (onDark: boolean): string =>
-  `rounded-pill px-4 py-1.5 text-[12px] font-medium transition active:scale-95 ${
-    onDark ? 'bg-white text-ink hover:bg-white/90' : 'bg-ink text-white dark:bg-white dark:text-ink'
-  }`;
+const iconButton =
+  'flex h-9 w-9 items-center justify-center rounded-full text-ink/80 transition hover:bg-ink/10 hover:text-ink';
 
-/** Slim, frosted top navigation in the Apple grammar. */
+/** Solid, sticky top bar: brand, section tabs, search and account controls. */
 export function SiteNav() {
+  const pathname = usePathname();
   const { mode, toggle } = useTheme();
   const { isAuthenticated, user, logout } = useAuth();
-  const [scrolled, setScrolled] = useState(false);
-  const heroOverlay = darkHeroRoutes.has(usePathname());
 
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12);
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+  const isActive = (href: string) =>
+    href === '/' ? pathname === '/' : pathname === href || pathname.startsWith(`${href}/`);
 
-  // Floating over a dark hero: invert the type so it stays legible until scroll.
-  const onDark = heroOverlay && !scrolled;
+  const accountMenu: MenuProps['items'] = [
+    { key: 'dashboard', label: <Link href="/dashboard">Dashboard</Link> },
+    { key: 'bookmarks', label: <Link href="/dashboard/bookmarks">Saved</Link> },
+    { key: 'downloads', label: <Link href="/dashboard/downloads">Downloads</Link> },
+    { key: 'orders', label: <Link href="/dashboard/orders">Orders</Link> },
+    { type: 'divider' },
+    { key: 'logout', label: 'Sign out', onClick: () => void logout() },
+  ];
+
+  const initial = (user?.displayName ?? user?.email ?? '?').charAt(0).toUpperCase();
 
   return (
-    <header
-      className={`fixed inset-x-0 top-0 z-40 transition-colors duration-300 ${
-        scrolled
-          ? 'bg-canvas/80 backdrop-blur-xl backdrop-saturate-150 dark:bg-tile-1/80'
-          : 'bg-transparent'
-      } ${onDark ? 'text-white' : ''}`}
-    >
+    <header className="sticky top-0 z-40 border-b border-hairline bg-background/90 backdrop-blur-xl">
       <nav
-        className="mx-auto flex h-12 max-w-wide items-center justify-between px-5 text-[12px]"
+        className="mx-auto flex h-14 max-w-wide items-center gap-4 px-4 sm:px-5"
         aria-label="Primary"
       >
-        <Link
-          href="/"
-          className={`font-display text-base font-semibold tracking-tight ${
-            onDark ? 'text-white' : 'text-ink dark:text-parchment'
-          }`}
-        >
-          {siteConfig.name}
+        <Link href="/" className="flex shrink-0 items-center gap-2">
+          <span
+            aria-hidden
+            className="flex h-7 w-7 items-center justify-center rounded-md bg-primary font-display text-sm font-bold text-ink-fixed"
+          >
+            {siteConfig.name.charAt(0)}
+          </span>
+          <span className="hidden font-display text-lg font-bold tracking-tight text-ink sm:inline">
+            {siteConfig.name}
+          </span>
         </Link>
 
-        <ul className="hidden items-center gap-7 md:flex">
+        <ul className="no-scrollbar flex min-w-0 items-center gap-1 overflow-x-auto text-sm font-semibold">
           {navLinks.map((link) => (
-            <li key={link.href}>
+            <li key={link.href} className={link.href === '/about' ? 'hidden lg:block' : undefined}>
               <Link
                 href={link.href}
-                className={
-                  onDark
-                    ? 'text-white/75 transition-colors hover:text-white'
-                    : 'text-ink/70 transition-colors hover:text-ink dark:text-parchment/70 dark:hover:text-parchment'
-                }
+                aria-current={isActive(link.href) ? 'page' : undefined}
+                className={cn(
+                  'relative block whitespace-nowrap rounded-md px-3 py-2 transition-colors',
+                  isActive(link.href)
+                    ? 'text-ink after:absolute after:inset-x-3 after:-bottom-[9px] after:h-[3px] after:rounded-full after:bg-primary'
+                    : 'text-ink-muted hover:text-ink',
+                )}
               >
                 {link.label}
               </Link>
@@ -71,52 +72,52 @@ export function SiteNav() {
           ))}
         </ul>
 
-        <div className="flex items-center gap-3">
-          <NavSearch onDark={onDark} />
+        <div className="ml-auto flex shrink-0 items-center gap-1.5">
+          <NavSearch />
           {isAuthenticated && <NotificationBell />}
           <button
             type="button"
             onClick={toggle}
             aria-label={mode === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-            className={`flex h-8 w-8 items-center justify-center rounded-full transition ${
-              onDark
-                ? 'text-white/85 hover:bg-white/15'
-                : 'text-ink/80 hover:bg-ink/5 dark:text-parchment/80 dark:hover:bg-white/10'
-            }`}
+            className={iconButton}
           >
             {mode === 'dark' ? <SunOutlined /> : <MoonOutlined />}
           </button>
           {isAuthenticated ? (
             <>
-              <Link
-                href="/cart"
-                aria-label="Cart"
-                className={`flex h-8 w-8 items-center justify-center rounded-full transition ${
-                  onDark
-                    ? 'text-white/85 hover:bg-white/15'
-                    : 'text-ink/80 hover:bg-ink/5 dark:text-parchment/80 dark:hover:bg-white/10'
-                }`}
-              >
+              <Link href="/cart" aria-label="Cart" className={iconButton}>
                 <ShoppingCartOutlined />
               </Link>
-              <Link
-                href="/dashboard"
-                className={`hidden transition-colors sm:inline ${
-                  onDark
-                    ? 'text-white/75 hover:text-white'
-                    : 'text-ink/70 hover:text-ink dark:text-parchment/70 dark:hover:text-parchment'
-                }`}
-              >
-                {user?.displayName ?? 'Account'}
-              </Link>
-              <button type="button" onClick={() => void logout()} className={pillClasses(onDark)}>
-                Sign out
-              </button>
+              <Dropdown menu={{ items: accountMenu }} trigger={['click']} placement="bottomRight">
+                <button
+                  type="button"
+                  aria-label={`Account menu for ${user?.displayName ?? 'you'}`}
+                  className="ml-1 flex h-8 w-8 items-center justify-center overflow-hidden rounded-full bg-tile-2 text-sm font-bold text-white ring-2 ring-transparent transition hover:ring-primary"
+                >
+                  {user?.avatarUrl ? (
+                    // eslint-disable-next-line @next/next/no-img-element -- storage-served avatar
+                    <img src={user.avatarUrl} alt="" className="h-full w-full object-cover" />
+                  ) : (
+                    initial
+                  )}
+                </button>
+              </Dropdown>
             </>
           ) : (
-            <Link href="/login" className={pillClasses(onDark)}>
-              Sign in
-            </Link>
+            <>
+              <Link
+                href="/login"
+                className="hidden rounded-pill px-3 py-1.5 text-sm font-semibold text-ink-muted transition hover:text-ink sm:inline"
+              >
+                Log in
+              </Link>
+              <Link
+                href="/register"
+                className="rounded-pill bg-primary px-4 py-1.5 text-sm font-bold text-ink-fixed transition hover:bg-primary-focus active:scale-95"
+              >
+                Join
+              </Link>
+            </>
           )}
         </div>
       </nav>

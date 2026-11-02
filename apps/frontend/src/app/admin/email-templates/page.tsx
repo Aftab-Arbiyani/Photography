@@ -103,7 +103,7 @@ export default function AdminEmailTemplatesPage() {
         onCancel={() => setOpen(false)}
         okText="Save"
         width={720}
-        destroyOnClose
+        destroyOnHidden
       >
         <Form form={form} layout="vertical" requiredMark={false}>
           <Form.Item

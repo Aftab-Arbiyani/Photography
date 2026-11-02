@@ -3,13 +3,26 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #1d1d1f;
+  --background: #f6f7f8;
+  --background-rgb: 246 247 248;
+  --foreground: #0e1012;
+  /* Space-separated RGB channels so Tailwind opacity modifiers (text-ink/80) work. */
+  --ink: 14 16 18; /* #0e1012 */
+  --ink-muted: 92 99 108; /* #5c636c */
+  --hairline: 222 225 229; /* #dee1e5 */
+  --primary-text: 194 65 12; /* #c2410c — AA on white */
+  --primary-text-focus: 154 52 18; /* #9a3412 */
 }
 
 .dark {
-  --background: #1d1d1f;
-  --foreground: #f5f5f7;
+  --background: #0e1012;
+  --background-rgb: 14 16 18;
+  --foreground: #f0f2f5;
+  --ink: 240 242 245; /* #f0f2f5 */
+  --ink-muted: 150 158 168; /* #969ea8 */
+  --hairline: 42 46 51; /* #2a2e33 */
+  --primary-text: 255 122 69; /* #ff7a45 */
+  --primary-text-focus: 255 160 122; /* #ffa07a */
 }
 
 html {
@@ -28,10 +41,25 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-/* Apple-tight display headlines */
+/* Tight, heavy display headlines */
 .font-display {
   font-family: var(--font-display), system-ui, sans-serif;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
+}
+
+/* Justified photo rows: a greedy last-row filler stops the final row stretching
+   a lone photo across the full width. */
+.justified-grid::after {
+  content: '';
+  flex-grow: 999999;
+}
+
+/* Hide horizontal scrollbars on tab/chip rows while keeping them scrollable. */
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
 }
 
 /* Fine film grain laid over hero-sized photographic surfaces. */
@@ -48,10 +76,47 @@ body {
   mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
 }
 
-/* Visible keyboard focus ring (accessibility) */
-:focus-visible {
-  outline: 2px solid #0071e3;
+/* antd paints table/list empty states in its *disabled* grey (25% alpha), which
+   is unreadable; lift them to the description grey. The `html` prefix outranks
+   antd's (equal-specificity, later-injected) `.ant-list .ant-list-empty-text`. */
+html .ant-empty-normal,
+html .ant-list .ant-list-empty-text,
+html .ant-table-wrapper .ant-table-tbody > tr.ant-table-placeholder > td {
+  color: rgba(0, 0, 0, 0.6);
+}
+html.dark .ant-empty-normal,
+html.dark .ant-list .ant-list-empty-text,
+html.dark .ant-table-wrapper .ant-table-tbody > tr.ant-table-placeholder > td {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+/* Non-solid danger buttons ("Delete"): antd's red is ~3.2:1 in both themes, so
+   darken it on light and brighten it on dark. Solid ones keep antd's red so their
+   white label stays legible. */
+html .ant-btn.ant-btn-color-dangerous:not(.ant-btn-variant-solid):not(:disabled) {
+  color: #cf1322;
+  border-color: #cf1322;
+}
+html.dark .ant-btn.ant-btn-color-dangerous:not(.ant-btn-variant-solid):not(:disabled) {
+  color: #ff7875;
+  border-color: #ff7875;
+}
+html .ant-btn.ant-btn-color-dangerous.ant-btn-variant-text:not(:disabled),
+html .ant-btn.ant-btn-color-dangerous.ant-btn-variant-link:not(:disabled) {
+  border-color: transparent;
+}
+
+/* Visible keyboard focus ring (accessibility). The `html a` rule outranks antd's
+   injected `:where(.css-…) a:focus { outline: 0 }`. The ring deepens on light
+   backgrounds so it keeps 3:1 contrast there. */
+:focus-visible,
+html a:focus-visible {
+  outline: 2px solid #c2410c;
   outline-offset: 2px;
+}
+.dark :focus-visible,
+html.dark a:focus-visible {
+  outline-color: #ff7a45;
 }
 
 /* Respect reduced motion globally */

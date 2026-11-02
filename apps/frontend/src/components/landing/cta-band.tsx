@@ -28,7 +28,7 @@ export function CtaBand({ photo }: CtaBandProps) {
         <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
           <Link
             href="/register"
-            className="rounded-pill bg-white px-7 py-3.5 text-[15px] font-medium text-ink transition hover:bg-white/90 active:scale-95"
+            className="rounded-pill bg-white px-7 py-3.5 text-[15px] font-medium text-ink-fixed transition hover:bg-white/90 active:scale-95"
           >
             Create your account
           </Link>

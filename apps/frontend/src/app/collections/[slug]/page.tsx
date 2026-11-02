@@ -36,7 +36,7 @@ export default async function CollectionDetailPage({ params }: PageProps) {
   const photos = await api.collectionPhotos(slug).catch((): PublicPhoto[] => []);
 
   return (
-    <section className="mx-auto max-w-wide px-5 pt-28 pb-20">
+    <section className="mx-auto max-w-wide px-5 pt-10 pb-20">
       <header className="mb-10">
         <p className="text-tagline text-primary">Collection</p>
         <h1 className="font-display mt-1 text-display-lg font-semibold tracking-tight">

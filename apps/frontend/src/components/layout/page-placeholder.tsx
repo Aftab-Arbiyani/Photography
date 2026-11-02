@@ -11,14 +11,14 @@ interface PagePlaceholderProps {
  */
 export function PagePlaceholder({ title, description }: PagePlaceholderProps) {
   return (
-    <section className="flex min-h-[70svh] items-center justify-center px-5 pt-24">
+    <section className="flex min-h-[70svh] items-center justify-center px-5 pt-8">
       <div className="mx-auto max-w-content text-center">
         <p className="text-tagline text-primary">Coming in the next phase</p>
         <h1 className="font-display mt-3 text-display-lg font-semibold tracking-tight">{title}</h1>
         <p className="mx-auto mt-4 max-w-xl text-lead text-ink-muted">{description}</p>
         <Link
           href="/"
-          className="mt-8 inline-block rounded-pill bg-primary px-6 py-3 text-base text-white transition active:scale-95"
+          className="mt-8 inline-block rounded-pill bg-primary px-6 py-3 text-base font-semibold text-ink-fixed transition active:scale-95"
         >
           Back home
         </Link>

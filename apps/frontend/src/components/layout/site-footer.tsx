@@ -5,61 +5,73 @@ const columns = [
   {
     heading: 'Explore',
     links: [
-      { href: '/gallery', label: 'Gallery' },
+      { href: '/gallery', label: 'Discover' },
+      { href: '/store', label: 'Shop' },
       { href: '/collections', label: 'Collections' },
-      { href: '/albums', label: 'Albums' },
     ],
   },
   {
-    heading: 'Studio',
+    heading: 'Help',
     links: [
       { href: '/about', label: 'About' },
-      { href: '/contact', label: 'Contact' },
       { href: '/faq', label: 'FAQ' },
-      { href: '/pricing', label: 'Pricing' },
+      { href: '/contact', label: 'Contact' },
     ],
   },
   {
-    heading: 'Account',
+    heading: 'Legal',
     links: [
-      { href: '/login', label: 'Sign in' },
-      { href: '/register', label: 'Create account' },
-      { href: '/dashboard', label: 'Dashboard' },
       { href: '/terms', label: 'Terms' },
       { href: '/privacy', label: 'Privacy' },
     ],
   },
 ];
 
+/** Compact footer: brand mark and a one-line pitch, then three link groups. */
 export function SiteFooter() {
   return (
-    <footer className="bg-parchment dark:bg-tile-3">
-      <div className="mx-auto grid max-w-wide grid-cols-2 gap-8 px-5 py-16 md:grid-cols-4">
-        <div className="col-span-2 md:col-span-1">
-          <p className="font-display text-lg font-semibold">{siteConfig.name}</p>
-          <p className="mt-2 max-w-xs text-sm text-ink-muted">{siteConfig.description}</p>
+    <footer className="border-t border-hairline bg-parchment dark:bg-tile-3">
+      <div className="mx-auto flex max-w-wide flex-col gap-8 px-5 py-10 md:flex-row md:justify-between">
+        <div>
+          <Link href="/" className="inline-flex items-center gap-2">
+            <span
+              aria-hidden
+              className="flex h-7 w-7 items-center justify-center rounded-md bg-primary font-display text-sm font-bold text-ink-fixed"
+            >
+              {siteConfig.name.charAt(0)}
+            </span>
+            <span className="font-display text-lg font-bold tracking-tight text-ink">
+              {siteConfig.name}
+            </span>
+          </Link>
+          <p className="mt-3 max-w-md text-sm text-ink-muted">
+            Original photography and model sets, in full resolution.
+          </p>
         </div>
-        {columns.map((col) => (
-          <div key={col.heading}>
-            <p className="text-[14px] font-semibold text-ink dark:text-parchment">{col.heading}</p>
-            <ul className="mt-3 space-y-2">
-              {col.links.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-ink-muted transition hover:text-primary"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
+
+        <nav aria-label="Footer" className="grid grid-cols-3 gap-8 sm:gap-16">
+          {columns.map((col) => (
+            <div key={col.heading}>
+              <h2 className="text-sm font-semibold text-ink">{col.heading}</h2>
+              <ul className="mt-3 space-y-1.5">
+                {col.links.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className="inline-block py-0.5 text-sm text-ink-muted transition hover:text-ink"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </nav>
       </div>
-      <div className="border-t border-hairline/60 dark:border-white/10">
-        <p className="mx-auto max-w-wide px-5 py-6 text-xs text-ink-muted">
-          © {new Date().getFullYear()} {siteConfig.name}. Crafted for photographers.
+      <div className="border-t border-hairline">
+        <p className="mx-auto max-w-wide px-5 py-5 text-xs text-ink-muted">
+          © {new Date().getFullYear()} {siteConfig.name}
         </p>
       </div>
     </footer>

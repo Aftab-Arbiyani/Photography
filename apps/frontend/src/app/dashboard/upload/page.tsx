@@ -8,6 +8,7 @@ import type { UploadFile } from 'antd';
 import { ContentStatus, type PublicCategory, type PublicPhoto, UserRole } from '@photography/types';
 import { ApiError, client } from '@/lib/api-client';
 import { useAuth } from '@/components/providers/auth-provider';
+import { features } from '@/lib/config';
 
 export default function UploadPage() {
   const { user } = useAuth();
@@ -30,14 +31,18 @@ export default function UploadPage() {
   if (!canUpload) {
     return (
       <Card>
-        <h1 className="font-display text-tagline font-semibold">Photographers only</h1>
-        <p className="mt-2 text-sm text-ink-muted">
-          You need an approved photographer account to upload.{' '}
-          <Link href="/dashboard/photographer" className="text-primary">
-            Apply here
-          </Link>
-          .
-        </p>
+        <h1 className="font-display text-tagline font-semibold">Uploads are closed</h1>
+        {features.photographerApplications ? (
+          <p className="mt-2 text-sm text-ink-muted">
+            You need an approved photographer account to upload.{' '}
+            <Link href="/dashboard/photographer" className="text-primary">
+              Apply here
+            </Link>
+            .
+          </p>
+        ) : (
+          <p className="mt-2 text-sm text-ink-muted">Uploading is limited to administrators.</p>
+        )}
       </Card>
     );
   }
@@ -107,7 +112,11 @@ export default function UploadPage() {
           <Form.Item name="description" label="Description">
             <Input.TextArea rows={2} maxLength={4000} />
           </Form.Item>
-          <Form.Item name="story" label="Story behind the image">
+          <Form.Item
+            name="story"
+            label="Extended caption (optional)"
+            extra="Longer notes shown under the description, collapsed behind “Read more”."
+          >
             <Input.TextArea rows={4} maxLength={20000} />
           </Form.Item>
           <div className="flex gap-3">

@@ -1,24 +1,24 @@
 /**
- * Design tokens distilled from the Apple + National Geographic reference system.
+ * Design tokens for the dark-first creator gallery (ember accent).
  * Single source of truth shared between Tailwind config and runtime styles.
  */
 export const tokens = {
   colors: {
     canvas: '#ffffff',
-    canvasParchment: '#f5f5f7',
-    surfaceTile1: '#272729',
-    surfaceTile2: '#2a2a2c',
-    surfaceTile3: '#252527',
+    canvasParchment: '#eef0f2',
+    surfaceTile1: '#0e1012',
+    surfaceTile2: '#1a1d21',
+    surfaceTile3: '#07080a',
     surfaceBlack: '#000000',
-    ink: '#1d1d1f',
+    ink: '#0e1012',
     inkMuted80: '#333333',
-    inkMuted48: '#6e6e73',
+    inkMuted48: '#5c636c',
     bodyOnDark: '#ffffff',
     bodyMuted: '#cccccc',
-    primary: '#0066cc',
-    primaryFocus: '#0071e3',
-    primaryOnDark: '#2997ff',
-    hairline: '#e0e0e0',
+    primary: '#ff7a45',
+    primaryFocus: '#ff9466',
+    primaryOnDark: '#ff7a45',
+    hairline: '#dee1e5',
     dividerSoft: '#f0f0f0',
   },
   radius: {
@@ -26,7 +26,7 @@ export const tokens = {
     xs: '5px',
     sm: '8px',
     md: '11px',
-    lg: '18px',
+    lg: '12px',
     pill: '9999px',
   },
   shadow: {

@@ -151,7 +151,7 @@ function PhotosPanel({ photographerId }: { photographerId: string }) {
         onOk={save}
         onCancel={() => setEditing(null)}
         okText="Save"
-        destroyOnClose
+        destroyOnHidden
       >
         <Form form={form} layout="vertical" requiredMark={false}>
           <Form.Item name="title" label="Title" rules={[{ required: true }]}>
@@ -160,7 +160,11 @@ function PhotosPanel({ photographerId }: { photographerId: string }) {
           <Form.Item name="description" label="Description">
             <Input.TextArea rows={2} />
           </Form.Item>
-          <Form.Item name="story" label="Story">
+          <Form.Item
+            name="story"
+            label="Extended caption (optional)"
+            extra="Longer notes shown under the description, collapsed behind “Read more”."
+          >
             <Input.TextArea rows={3} />
           </Form.Item>
           <Form.Item name="status" label="Status">
@@ -288,7 +292,7 @@ function AlbumsPanel() {
           setCreating(false);
         }}
         okText="Save"
-        destroyOnClose
+        destroyOnHidden
       >
         <Form form={form} layout="vertical" requiredMark={false}>
           <Form.Item name="title" label="Title" rules={[{ required: true, max: 200 }]}>

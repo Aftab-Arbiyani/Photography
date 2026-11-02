@@ -4,22 +4,23 @@ export const siteConfig = {
   url: process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000',
   apiUrl: process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:4000/api/v1',
   description:
-    'Aperture — a photography platform where light, story and craft meet. Explore galleries, collections and the stories behind each frame.',
+    'Aperture — original photography and model sets. Browse the gallery, fave your favourites and buy high-resolution downloads.',
   twitter: '@aperture',
 } as const;
 
 /**
- * Routes that open with a dark, full-bleed hero under the fixed navigation.
- * The nav renders light-on-dark on these until the user scrolls — resolved from
- * the pathname (not a mount effect) so the very first paint is already correct.
+ * UI feature toggles. Hidden features keep their code and API wiring — flip the
+ * env var to bring them back.
  */
-export const darkHeroRoutes: ReadonlySet<string> = new Set(['/']);
+export const features = {
+  /** Let regular users apply to become photographers. Off: only admins upload. */
+  photographerApplications: process.env.NEXT_PUBLIC_ENABLE_PHOTOGRAPHER_APPLICATIONS === 'true',
+} as const;
 
 export const navLinks = [
   { href: '/', label: 'Home' },
-  { href: '/gallery', label: 'Gallery' },
-  { href: '/store', label: 'Store' },
+  { href: '/gallery', label: 'Discover' },
+  { href: '/store', label: 'Shop' },
   { href: '/collections', label: 'Collections' },
-  { href: '/albums', label: 'Albums' },
   { href: '/about', label: 'About' },
 ] as const;

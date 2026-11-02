@@ -62,7 +62,7 @@ export function SearchView() {
   const groups = global?.groups;
 
   return (
-    <section className="mx-auto max-w-wide px-5 pt-28 pb-20">
+    <section className="mx-auto max-w-wide px-5 pt-10 pb-20">
       <h1 className="font-display text-display-lg font-semibold tracking-tight">
         {q ? <>Results for “{q}”</> : 'Search'}
       </h1>

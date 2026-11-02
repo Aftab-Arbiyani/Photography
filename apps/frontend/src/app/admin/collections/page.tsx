@@ -136,7 +136,7 @@ export default function AdminCollectionsPage() {
         onOk={submit}
         onCancel={() => setOpen(false)}
         okText="Save"
-        destroyOnClose
+        destroyOnHidden
       >
         <Form form={form} layout="vertical" requiredMark={false}>
           <Form.Item name="title" label="Title" rules={[{ required: true, max: 200 }]}>

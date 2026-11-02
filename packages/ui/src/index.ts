@@ -6,5 +6,6 @@ export * from './tokens';
 export * from './cn';
 export * from './components/responsive-image';
 export * from './components/masonry-grid';
+export * from './components/justified-grid';
 export * from './components/photo-card';
 export * from './components/lightbox';

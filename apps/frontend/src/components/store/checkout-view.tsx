@@ -46,7 +46,7 @@ export function CheckoutView() {
   );
 
   return (
-    <section className="mx-auto max-w-md px-5 pt-28 pb-20">
+    <section className="mx-auto max-w-md px-5 pt-10 pb-20">
       <h1 className="font-display mb-6 text-display-lg font-semibold tracking-tight">Checkout</h1>
 
       {phase === 'loading' && (

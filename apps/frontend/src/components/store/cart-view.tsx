@@ -51,7 +51,7 @@ export function CartView() {
 
   if (loading || authLoading)
     return (
-      <div className="flex min-h-[50svh] items-center justify-center pt-24">
+      <div className="flex min-h-[50svh] items-center justify-center pt-8">
         <Spin size="large" />
       </div>
     );
@@ -60,7 +60,7 @@ export function CartView() {
   const t = cart?.totals;
 
   return (
-    <section className="mx-auto max-w-content px-5 pt-28 pb-20">
+    <section className="mx-auto max-w-content px-5 pt-10 pb-20">
       <h1 className="font-display text-display-lg font-semibold tracking-tight">Your cart</h1>
 
       {items.length === 0 ? (

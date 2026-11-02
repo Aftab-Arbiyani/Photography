@@ -11,26 +11,33 @@ interface ThemeContextValue {
   toggle: () => void;
 }
 
-const ThemeContext = createContext<ThemeContextValue>({ mode: 'light', toggle: () => {} });
+const ThemeContext = createContext<ThemeContextValue>({ mode: 'dark', toggle: () => {} });
 
 export const useTheme = () => useContext(ThemeContext);
 
 /** Client theme provider: persists dark/light mode and feeds AntD + the `dark` class. */
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [mode, setMode] = useState<Mode>('light');
+  // Dark-first: the gallery is designed around a dark stage; light is opt-in.
+  // Starts dark on both server and client so hydration matches. A stored light
+  // choice is already on <html> before paint (script in layout.tsx); antd's
+  // components pick it up in the effect below.
+  const [mode, setMode] = useState<Mode>('dark');
+  // Don't write the class/storage until the stored choice has been read, or the
+  // first pass would briefly force dark back on for light-mode viewers.
+  const [ready, setReady] = useState(false);
 
-  // Hydrate from storage / system preference once mounted.
+  // Hydrate an explicit choice from storage once mounted.
   useEffect(() => {
-    const stored = window.localStorage.getItem('theme') as Mode | null;
-    const initial =
-      stored ?? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-    setMode(initial);
+    const stored = window.localStorage.getItem('theme');
+    if (stored === 'light' || stored === 'dark') setMode(stored);
+    setReady(true);
   }, []);
 
   useEffect(() => {
+    if (!ready) return;
     document.documentElement.classList.toggle('dark', mode === 'dark');
     window.localStorage.setItem('theme', mode);
-  }, [mode]);
+  }, [mode, ready]);
 
   const toggle = useCallback(() => setMode((m) => (m === 'dark' ? 'light' : 'dark')), []);
   const value = useMemo(() => ({ mode, toggle }), [mode, toggle]);

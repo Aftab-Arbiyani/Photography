@@ -102,7 +102,7 @@ export function Hero({ photos }: HeroProps) {
         >
           <Link
             href="/gallery"
-            className="rounded-pill bg-white px-7 py-3.5 text-[15px] font-medium text-ink transition hover:bg-white/90 active:scale-95"
+            className="rounded-pill bg-white px-7 py-3.5 text-[15px] font-medium text-ink-fixed transition hover:bg-white/90 active:scale-95"
           >
             Explore the gallery
           </Link>

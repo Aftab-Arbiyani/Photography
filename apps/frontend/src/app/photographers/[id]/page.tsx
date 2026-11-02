@@ -56,13 +56,13 @@ export default function PhotographerProfilePage() {
 
   if (loading)
     return (
-      <div className="flex min-h-[60svh] items-center justify-center pt-24">
+      <div className="flex min-h-[60svh] items-center justify-center pt-8">
         <Spin size="large" />
       </div>
     );
   if (!profile)
     return (
-      <div className="mx-auto max-w-content px-5 pt-28">
+      <div className="mx-auto max-w-content px-5 pt-10">
         <Empty description="Photographer not found" />
       </div>
     );
@@ -70,7 +70,7 @@ export default function PhotographerProfilePage() {
   const isSelf = user?.id === id;
 
   return (
-    <section className="mx-auto max-w-wide px-5 pt-28 pb-20">
+    <section className="mx-auto max-w-wide px-5 pt-10 pb-20">
       <header className="flex flex-col items-center gap-4 text-center sm:flex-row sm:items-end sm:text-left">
         <Avatar size={96} src={profile.avatarUrl ?? undefined}>
           {profile.displayName[0]?.toUpperCase()}

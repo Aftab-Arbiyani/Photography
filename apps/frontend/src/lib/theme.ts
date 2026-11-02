@@ -6,15 +6,26 @@ export function buildAntdTheme(isDark: boolean): ThemeConfig {
   return {
     algorithm: isDark ? antdTheme.darkAlgorithm : antdTheme.defaultAlgorithm,
     token: {
-      colorPrimary: '#0066cc',
-      colorLink: isDark ? '#2997ff' : '#0066cc',
+      colorPrimary: isDark ? '#ff7a45' : '#c2410c',
+      colorLink: isDark ? '#ff7a45' : '#c2410c',
       borderRadius: 8,
-      borderRadiusLG: 18,
+      borderRadiusLG: 12,
       fontFamily: 'var(--font-text), system-ui, -apple-system, sans-serif',
-      colorBgBase: isDark ? '#1d1d1f' : '#ffffff',
+      colorBgBase: isDark ? '#0e1012' : '#ffffff',
+      ...(isDark && { colorBgContainer: '#1a1d21', colorBgElevated: '#1f2328' }),
+      // antd's default hint greys (45% alpha) fall below AA in both themes.
+      colorTextDescription: isDark ? 'rgba(255, 255, 255, 0.65)' : 'rgba(0, 0, 0, 0.6)',
+      colorTextTertiary: isDark ? 'rgba(255, 255, 255, 0.65)' : 'rgba(0, 0, 0, 0.6)',
+      ...(isDark && { colorTextPlaceholder: 'rgba(255, 255, 255, 0.5)' }),
     },
     components: {
-      Button: { borderRadius: 9999, controlHeight: 40 },
+      // Bright ember fills need dark labels in dark mode; white fails contrast.
+      Button: {
+        borderRadius: 9999,
+        controlHeight: 40,
+        fontWeight: 600,
+        ...(isDark && { primaryColor: '#0e1012' }),
+      },
     },
   };
 }

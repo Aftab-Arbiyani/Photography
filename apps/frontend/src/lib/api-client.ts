@@ -194,7 +194,11 @@ export const client = {
   providers: () => clientRequest<{ local: boolean; google: boolean }>('/auth/providers'),
 
   // photos
-  gallery: (qs: string) => clientRequest<CursorPaginated<PublicPhoto>>(`/photos${qs}`),
+  // Optional auth: anonymous callers get the same list, signed-in ones also get
+  // their likedByMe / bookmarkedByMe flags.
+  gallery: (qs: string) =>
+    clientRequest<CursorPaginated<PublicPhoto>>(`/photos${qs}`, { auth: true }),
+  photo: (slug: string) => clientRequest<PublicPhoto>(`/photos/${slug}`, { auth: true }),
   like: (id: string) =>
     clientRequest<{ liked: boolean; likesCount: number }>(`/photos/${id}/like`, {
       method: 'POST',

@@ -110,8 +110,8 @@ export function SplitFeature({
             href={ctaHref}
             className={`mt-9 inline-flex items-center gap-2 rounded-pill px-6 py-3 text-[15px] font-medium transition active:scale-95 ${
               onDark
-                ? 'bg-white text-ink hover:bg-white/90'
-                : 'bg-ink text-white hover:bg-ink/90 dark:bg-white dark:text-ink dark:hover:bg-white/90'
+                ? 'bg-white text-ink-fixed hover:bg-white/90'
+                : 'bg-ink text-white hover:bg-ink/90 dark:bg-white dark:text-ink-fixed dark:hover:bg-white/90'
             }`}
           >
             {ctaLabel}

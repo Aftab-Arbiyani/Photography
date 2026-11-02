@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { PhotoAssets } from '@photography/types';
 import { cn } from '../cn';
 
@@ -30,6 +30,14 @@ export function ResponsiveImage({
   priority = false,
 }: ResponsiveImageProps) {
   const [loaded, setLoaded] = useState(false);
+  const imgRef = useRef<HTMLImageElement>(null);
+
+  // A server-rendered image can finish loading before hydration, in which case
+  // React never sees `load` — catch that so it doesn't stay at opacity 0.
+  useEffect(() => {
+    const img = imgRef.current;
+    if (img?.complete && img.naturalWidth > 0) setLoaded(true);
+  }, []);
 
   return (
     <div
@@ -45,6 +53,7 @@ export function ResponsiveImage({
         {assets.avif && <source srcSet={assets.avif} type="image/avif" sizes={sizes} />}
         {assets.webp && <source srcSet={assets.webp} type="image/webp" sizes={sizes} />}
         <img
+          ref={imgRef}
           src={assets.webp || assets.original}
           alt={alt}
           width={width}

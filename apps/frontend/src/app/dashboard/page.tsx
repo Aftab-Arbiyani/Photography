@@ -6,6 +6,7 @@ import { Card, Col, Row, Statistic } from 'antd';
 import { UserRole } from '@photography/types';
 import { client } from '@/lib/api-client';
 import { useAuth } from '@/components/providers/auth-provider';
+import { features } from '@/lib/config';
 
 export default function DashboardOverviewPage() {
   const { user } = useAuth();
@@ -61,7 +62,7 @@ export default function DashboardOverviewPage() {
         </Col>
       </Row>
 
-      {user?.role === UserRole.USER && (
+      {features.photographerApplications && user?.role === UserRole.USER && (
         <Card className="mt-6">
           <h2 className="font-display text-tagline font-semibold">Sell your work</h2>
           <p className="mt-1 text-sm text-ink-muted">
@@ -69,7 +70,7 @@ export default function DashboardOverviewPage() {
           </p>
           <Link
             href="/dashboard/photographer"
-            className="mt-4 inline-block rounded-pill bg-primary px-5 py-2 text-sm text-white transition active:scale-95"
+            className="mt-4 inline-block rounded-pill bg-primary px-5 py-2 text-sm font-semibold text-ink-fixed transition active:scale-95"
           >
             Become a photographer
           </Link>

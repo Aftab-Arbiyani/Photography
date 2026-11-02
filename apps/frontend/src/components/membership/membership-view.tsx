@@ -70,7 +70,7 @@ export function MembershipView() {
   };
 
   return (
-    <section className="mx-auto max-w-content px-5 pb-24 pt-28">
+    <section className="mx-auto max-w-content px-5 pb-24 pt-10">
       <header className="mb-8">
         <p className="text-tagline text-primary">Account</p>
         <h1 className="font-display mt-2 text-display-lg font-semibold tracking-tight">

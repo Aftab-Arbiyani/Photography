@@ -108,7 +108,7 @@ export default function AdminCategoriesPage() {
         onOk={submit}
         onCancel={() => setOpen(false)}
         okText="Save"
-        destroyOnClose
+        destroyOnHidden
       >
         <Form form={form} layout="vertical" requiredMark={false}>
           <Form.Item name="name" label="Name" rules={[{ required: true, max: 120 }]}>

@@ -1,12 +1,15 @@
 import type {
   ApiResponse,
   CursorPaginated,
+  MarketplaceAlbum,
   Paginated,
   PublicAlbum,
   PublicCategory,
   PublicCmsPage,
   PublicCollection,
   PublicPhoto,
+  PublicPhotographer,
+  PublicTag,
 } from '@photography/types';
 import { siteConfig } from './config';
 
@@ -62,12 +65,17 @@ export const api = {
   gallery: (query = '') => request<CursorPaginated<PublicPhoto>>(`/photos${query}`),
   photo: (slug: string) => request<PublicPhoto>(`/photos/${slug}`),
   relatedPhotos: (slug: string) => request<PublicPhoto[]>(`/photos/${slug}/related`),
+  photoTags: (photoId: string) => request<PublicTag[]>(`/photos/${photoId}/tags`),
+  /** Public creator profile (display name, avatar, counts). */
+  photographer: (id: string) => request<PublicPhotographer>(`/photographers/${id}`),
   categories: () => request<PublicCategory[]>('/categories'),
   albums: () => request<Paginated<PublicAlbum>>('/albums'),
   album: (slug: string) => request<PublicAlbum>(`/albums/${slug}`),
   collections: () => request<Paginated<PublicCollection>>('/collections'),
   collection: (slug: string) => request<PublicCollection>(`/collections/${slug}`),
   collectionPhotos: (slug: string) => request<PublicPhoto[]>(`/collections/${slug}/photos`),
+  /** Sets for sale in the shop, e.g. `?limit=8&sort=sales`. */
+  shopAlbums: (query = '') => request<Paginated<MarketplaceAlbum>>(`/marketplace/albums${query}`),
   /** Published CMS page by slug (ISR — content pages change rarely). */
   cmsPage: (slug: string) =>
     request<PublicCmsPage>(`/pages/${slug}`, { next: { revalidate: 300 } }),

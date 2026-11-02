@@ -25,7 +25,7 @@ export async function CmsPageView({ slug, fallbackTitle, fallbackDescription }: 
   const html = marked.parse(page.body, { async: false }) as string;
 
   return (
-    <article className="mx-auto max-w-content px-5 pb-24 pt-28">
+    <article className="mx-auto max-w-content px-5 pb-24 pt-10">
       <header className="mb-10 border-b border-line pb-8">
         <p className="text-tagline text-primary">{siteSection(slug)}</p>
         <h1 className="font-display mt-3 text-display-lg font-semibold tracking-tight">

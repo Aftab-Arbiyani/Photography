@@ -83,7 +83,7 @@ export function PhotoSocial({ photoId, photoSlug }: { photoId: string; photoSlug
         open={reportOpen}
         onCancel={() => setReportOpen(false)}
         footer={null}
-        destroyOnClose
+        destroyOnHidden
       >
         <Form layout="vertical" onFinish={submitReport} requiredMark={false}>
           <Form.Item

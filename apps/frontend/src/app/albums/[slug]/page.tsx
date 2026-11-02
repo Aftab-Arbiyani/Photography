@@ -36,7 +36,7 @@ export default async function AlbumDetailPage({ params }: PageProps) {
   const initial = await api.gallery(`?albumId=${album.id}&limit=24`).catch(() => EMPTY);
 
   return (
-    <div className="mx-auto max-w-wide px-5 pt-28">
+    <div className="mx-auto max-w-wide px-5 pt-10">
       <header className="mb-6">
         <p className="text-tagline text-primary">Album</p>
         <h1 className="font-display mt-1 text-display-lg font-semibold tracking-tight">

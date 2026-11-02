@@ -13,7 +13,7 @@ interface AuthShellProps {
 /** Centered, minimal auth card in the Apple grammar. */
 export function AuthShell({ title, subtitle, children, footer }: AuthShellProps) {
   return (
-    <section className="flex min-h-[100svh] items-center justify-center px-5 pt-24 pb-16">
+    <section className="flex min-h-[100svh] items-center justify-center px-5 pt-8 pb-16">
       <div className="w-full max-w-sm">
         <Link
           href="/"

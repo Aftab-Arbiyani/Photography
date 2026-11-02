@@ -5,9 +5,9 @@ import { api } from '@/lib/api';
 import { buildMetadata } from '@/lib/seo';
 
 export const metadata: Metadata = buildMetadata({
-  title: 'Gallery',
+  title: 'Discover',
   description:
-    'Infinite-scroll masonry gallery with fullscreen viewer, EXIF and the story behind each frame.',
+    'Browse every photo in the gallery. Fave the ones you love and buy the full-res sets in the shop.',
   path: '/gallery',
 });
 
@@ -34,6 +34,9 @@ export default async function GalleryPage({ searchParams }: GalleryPageProps) {
 
   return (
     <GalleryClient
+      // Same-route navigations (e.g. ?category=a → /gallery) don't remount the
+      // client; keying on the filter makes it adopt the fresh server props.
+      key={selected?.id ?? 'all'}
       categories={categories}
       initial={initial}
       initialCategoryId={selected?.id ?? null}
